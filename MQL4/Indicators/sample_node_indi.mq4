@@ -27,8 +27,7 @@ double DataBuffer[];
 string _obj = "exampleIndi_";
 
 int deinit() {
-
-	//Delete any objects created on the chart by the indicator
+	// Delete any objects created on the chart by the indicator
    	for (int index = 0; index < ObjectsTotal(); index++)
 	{
 		if (StringFind(ObjectName(index), _obj) == 0)
@@ -37,7 +36,6 @@ int deinit() {
 			index--;
 		}
 	}
-
 
    return(0);
 }
@@ -51,41 +49,44 @@ int init() {
    return(0);
 }
 
-
-//Make the request to the Node.js server with the price to do some caculations and return the result
+// Make the request to the Node.js server with the price to do some caculations and return the result
 double make_request(double price)
 {
-	//Create the client request. This is in JSON format but you can send any string
-	string reqest = "{\"value\":\""+price+"\"}";
+	// Create the client request. This is in JSON format but you can send any string
+	string reqest = "{\"value\":\"" + price + "\"}";
 
 	//Create the response string
 	string response = "";
 
 	//Make the connection
-	if(!INet.Open(hostIp,hostPort)) return(0);
-	if(!INet.Request("POST","/",response,false, true, reqest, false))
+	if (!INet.Open(hostIp,hostPort))
+	{
+		 return(0);
+	}
+
+	if (!INet.Request("POST", "/", response, false, true, reqest, false))
 	{
 		printDebug("-Err download ");
+
 		return(0);
 	}
 
-	double calculated_value = 0; //To store the calculated value from the server
+	double calculated_value = 0; // To store the calculated value from the server
 
-	//The response string should now contain the response that the Node.js server gave with the data that we need
+	// The response string should now contain the response that the Node.js server gave with the data that we need
 	if (response != "") // If the respone isn't empty
 	{
-		JSONParser *parser = new JSONParser(); //Since the response is a JSON object, let's parse it
+		JSONParser *parser = new JSONParser(); // Since the response is a JSON object, let's parse it
 		JSONValue *jv = parser.parse(response);
 
-		//If the object looks good
+		// If the object looks good
 		if (jv == NULL) {
-			printDebug("error:"+(string)parser.getErrorCode()+parser.getErrorMessage());
+			printDebug("error:" + (string)parser.getErrorCode() + parser.getErrorMessage());
 		} else {
 
 			JSONObject *jo = jv;
 
 			calculated_value = jo.getDouble("value");
-
 		}
 
 		delete parser;
@@ -94,23 +95,23 @@ double make_request(double price)
 	return (calculated_value); // Return the value
 }
 
-
 int start()
 {
 	int counted_bars = IndicatorCounted();
 	int limit = MathMin(Bars - counted_bars, maxBarsToLoad);
 
-	for (int i=limit; i>=0; i--)
+	for (int i = limit; i >= 0; i--)
 	{
-		DataBuffer[i] = make_request(Close[i]); // Make the request and set the data buffer with the caculated value 
+		DataBuffer[i] = make_request(Close[i]); // Make the request and set the data buffer with the caculated value
 	}
 
    return(0);
 }
 
 
-//Helper functions to print debug information on to the chart
+// Helper functions to print debug information on to the chart
 int debugLine = 0;
+
 void printDebug(string msg)
 {
 	int y = 15*debugLine;
@@ -118,10 +119,11 @@ void printDebug(string msg)
 
 	y = 20+MathMod(y,800);
 
-	DrawLabel(_obj+"_debug_"+debugLine, msg, x, y, DodgerBlue, "Arial", 9);
-	debugLine++;
+	DrawLabel(_obj + "_debug_" + debugLine, msg, x, y, DodgerBlue, "Arial", 9);
 
+	debugLine++;
 }
+
 void DrawLabel(string label, string text, int x, int y, color clr, string fontName, int fontSize)
 {
    int typeCorner = 0;
