@@ -1,9 +1,9 @@
 //+------------------------------------------------------------------+
 //|                                                  InternetLib.mqh |
-//|                                 Copyright © 2010 www.fxmaster.de |
+//|                                 Copyright ï¿½ 2010 www.fxmaster.de |
 //|                                         Coding by Sergeev Alexey |
 //+------------------------------------------------------------------+
-#property copyright   "www.fxmaster.de  © 2010"
+#property copyright   "www.fxmaster.de  ï¿½ 2010"
 #property link        "www.fxmaster.de"
 #property version     "1.00"
 #property description "Library for work with wininet.dll"
@@ -115,7 +115,7 @@ void MqlNet::Close()
 //------------------------------------------------------------------ Request
 bool MqlNet::Request(string Verb,string Object,string &Out,bool toFile=false, bool get_out=false, string addData="",bool fromFile=false)
   {
-   
+
    if(toFile && Out=="")
      {
       Print("-File is not specified ");
@@ -165,7 +165,7 @@ bool MqlNet::Request(string Verb,string Object,string &Out,bool toFile=false, bo
       InternetCloseHandle(hRequest);
       Close();
      }
-  
+
    // read page
    if(get_out) ReadPage(hRequest,Out,toFile);
    // close all descriptors
@@ -298,6 +298,6 @@ string hex(int i) {
    int b = (i-a)/16;
    if (b>15) ret = StringConcatenate(hex(b), StringSubstr(h,a,1));
    else      ret = StringConcatenate(StringSubstr(h, b ,1), StringSubstr(h,a,1));
-   
+
    return (ret);
 }

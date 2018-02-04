@@ -6,16 +6,17 @@
 
 /*
    This is losely ported from a C version I have which was in turn modified from hashtable.c by Christopher Clark.
- Copyright (C) 2014, Andrew Lord (NICKNAME=lordy) <forex@NICKNAME.org.uk> 
- Copyright (C) 2002, 2004 Christopher Clark <firstname.lastname@cl.cam.ac.uk> 
+ Copyright (C) 2014, Andrew Lord (NICKNAME=lordy) <forex@NICKNAME.org.uk>
+ Copyright (C) 2002, 2004 Christopher Clark <firstname.lastname@cl.cam.ac.uk>
 
  2014/02/21 - Readded PrimeNumber sizes and auto rehashing when load factor hit.
 */
 
-      
+
 
 /// Any value stored in a Hash must be a subclass of HashValue
 class HashValue {
+    // TODO
 };
 
 /// Linked list of values - there will be one list for each hash value
@@ -109,7 +110,7 @@ class HashDatetime : public HashValue {
 ///
 /// // Then to insert into hash etc.
 ///
-///      Hash* h = new Hash(193,true); 
+///      Hash* h = new Hash(193,true);
 ///      // 'true' means when the hash will adopt the values and delete them when they are removed from the hash or when the hash is deleted.
 ///
 ///      h.hPut("a",a);
@@ -133,15 +134,15 @@ class HashDatetime : public HashValue {
 ///
 ///    //Delete the hash - this will also delete 'b' and 'c' because of the adopt flag.
 ///    delete h;
-/// </pre> 
+/// </pre>
 class Hash : public HashValue {
 
 private:
-    /// Number of slots in the hashtable. 
+    /// Number of slots in the hashtable.
     /// this should be approx number of elements to store. Depending on hash algorithm
     /// it may optimally be a prime or a power of two etc. but probably not important
     /// for MQL4 performance. A future optimisation might be to move the hashcode function to a DLL??
-    uint _hashSlots; 
+    uint _hashSlots;
 
     /// Number of elements at which hash will get resized.
     int _resizeThreshold;
@@ -180,7 +181,7 @@ private:
                return _primes[p];
             }
         }
-        return size; 
+        return size;
     }
 
     /// Primes that approx double in size, used for hash table sizes to avoid gcd causing bunching
@@ -282,13 +283,13 @@ public:
 
     /// Look for the required entry for key 'name' true if found.
     bool find(string keyName) {
-    
+
          //Alert("finding");
         bool found = false;
 
         // Get the index using the hashcode of the string
         _foundIndex = hash(keyName);
-        
+
 
         if (_foundIndex>_hashSlots ) {
 
@@ -297,7 +298,7 @@ public:
         } else {
 
             // Search the linked list determined by the index.
-            
+
             for(HashEntry *e = _buckets[_foundIndex] ; e != NULL ; e = e._next )  {
                 if (e._key == keyName) {
                     _foundEntry = e;
@@ -460,10 +461,10 @@ public:
     /// @param obj : Value to store
     /// @return the previous value of the key or NULL if there wasnt one 
     HashValue *hPut(string keyName,HashValue *obj) {
-    
+
         HashValue *ret = NULL;
         clearError();
-         
+
         if (find(keyName)) {
             // Return revious value
             ret = _foundEntry._val;

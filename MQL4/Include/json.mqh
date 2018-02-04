@@ -186,7 +186,7 @@ class JSONNumber : public JSONValue {
                 return (int)_long;
             }
         }
-        double getDouble() 
+        double getDouble()
         {
             if (_long != 0) {
                 return (double)_long;
@@ -213,7 +213,7 @@ class JSONNull : public JSONValue {
         setType(JSON_NULL);
     }
     ~JSONNull() {}
-    string toString() 
+    string toString()
     {
         return "null";
     }
@@ -234,23 +234,23 @@ class JSONObject : public JSONValue {
         }
         // Getters for Objects (key lookup ) --------------------------------------
         // Get child members - halt program if wront type(cast error) or doesnt exist(null pointer)
-        string getString(string key) 
+        string getString(string key)
         {
             return getValue(key).getString();
         }
-        bool getBool(string key) 
+        bool getBool(string key)
         {
             return getValue(key).getBool();
         }
-        double getDouble(string key) 
+        double getDouble(string key)
         {
             return getValue(key).getDouble();
         }
-        long getLong(string key) 
+        long getLong(string key)
         {
             return getValue(key).getLong();
         }
-        int getInt(string key) 
+        int getInt(string key)
         {
             return getValue(key).getInt();
         }
@@ -279,17 +279,17 @@ class JSONObject : public JSONValue {
 
         // methods that return objects might be chained so return the value in function result.
         // If it is null program will stop.
-        JSONArray *getArray(string key) 
+        JSONArray *getArray(string key)
         {
             return getValue(key);
         }
-        JSONObject *getObject(string key) 
+        JSONObject *getObject(string key)
         {
             return getValue(key);
         }
-        // The following method allows any type to be returned. Use this when parsing data whose 
+        // The following method allows any type to be returned. Use this when parsing data whose
         // structure is unpredictable.
-        JSONValue *getValue(string key) 
+        JSONValue *getValue(string key)
         {
             if (_hash == NULL) {
                 return NULL;
@@ -308,7 +308,7 @@ class JSONObject : public JSONValue {
            if (_hash != NULL) {
                HashLoop *l;
                int n=0;
-               
+
                for(l = new HashLoop(_hash) ; l.hasNext() ; l.next() ) {
                    JSONValue *v = (JSONValue *)(l.val());
                    s = StringConcatenate(s,(++n==1?"":","),
@@ -317,7 +317,7 @@ class JSONObject : public JSONValue {
                delete l;
            }
            s = s + "}";
-           return s; 
+           return s;
         }
 
         //Used by JSONIterator
@@ -341,25 +341,25 @@ class JSONArray : public JSONValue {
             }
         }
         // Getters for Objects (key lookup ) --------------------------------------
-        
+
         // Get child members - halt program if wront type(cast error) or doesnt exist(null pointer)
-        string getString(int index) 
+        string getString(int index)
         {
             return getValue(index).getString();
         }
-        bool getBool(int index) 
+        bool getBool(int index)
         {
             return getValue(index).getBool();
         }
-        double getDouble(int index) 
+        double getDouble(int index)
         {
             return getValue(index).getDouble();
         }
-        long getLong(int index) 
+        long getLong(int index)
         {
             return getValue(index).getLong();
         }
-        int getInt(int index) 
+        int getInt(int index)
         {
             return getValue(index).getInt();
         }
@@ -389,17 +389,17 @@ class JSONArray : public JSONValue {
 
         // methods that return objects might be chained so return the value in function result.
         // If it is null program will stop.
-        JSONArray *getArray(int index) 
+        JSONArray *getArray(int index)
         {
             return getValue(index);
         }
-        JSONObject *getObject(int index) 
+        JSONObject *getObject(int index)
         {
             return getValue(index);
         }
-        // The following method allows any type to be returned. Use this when parsing data whose 
+        // The following method allows any type to be returned. Use this when parsing data whose
         // structure is unpredictable.
-        JSONValue *getValue(int index) 
+        JSONValue *getValue(int index)
         {
             return _array[index];
         }
@@ -434,7 +434,7 @@ class JSONArray : public JSONValue {
                }
            }
            s = s + "]";
-           return s; 
+           return s;
         }
 
         int size() {
@@ -462,7 +462,7 @@ class JSONParser {
                 _errMsg = StringConcatenate(_errMsg,"\n",msg);
             }
         }
-        
+
     public:
         int getErrorCode()
         {
@@ -497,7 +497,7 @@ class JSONParser {
             return ret;
         }
 
-        JSONObject *parseObject() 
+        JSONObject *parseObject()
         {
             JSONObject *o = new JSONObject();
             skipSpace();
@@ -537,11 +537,11 @@ class JSONParser {
         }
 
         bool isDigit(ushort c) {
-            return (c >= '0' && c <= '9' ) || c == '+'  || c == '-'  ; 
+            return (c >= '0' && c <= '9' ) || c == '+'  || c == '-'  ;
         }
 
         bool isDoubleDigit(ushort c) {
-            return (c >= '0' && c <= '9' ) || c == '+'  || c == '-'  || c == '.'  || c == 'e'  || c == 'E' ; 
+            return (c >= '0' && c <= '9' ) || c == '+'  || c == '-'  || c == '.'  || c == 'e'  || c == 'E' ;
         }
 
         void skipSpace() {
@@ -631,7 +631,7 @@ class JSONParser {
             return ret;
         }
 
-        JSONValue *parseValue() 
+        JSONValue *parseValue()
         {
             JSONValue *ret = NULL;
             skipSpace();
@@ -754,16 +754,16 @@ class JSONIterator {
 
     public:
     // Create iterator and move to first item
-    JSONIterator(JSONObject *jo) 
+    JSONIterator(JSONObject *jo)
     {
         _l = new HashLoop(jo.getHash());
     }
-    ~JSONIterator() 
+    ~JSONIterator()
     {
         delete _l;
     }
     // Check if more items
-    bool hasNext() 
+    bool hasNext()
     {
         return _l.hasNext();
     }
@@ -787,7 +787,7 @@ class JSONIterator {
 
 };
 
-void json_demo() 
+void json_demo()
 {
     string s = "{ \"firstName\": \"John\", \"lastName\": \"Smith\", \"age\": 25, \"address\": { \"streetAddress\": \"21 2nd Street\", \"city\": \"New York\", \"state\": \"NY\", \"postalCode\": \"10021\" }, \"phoneNumber\": [ { \"type\": \"home\", \"number\": \"212 555-1234\" }, { \"type\": \"fax\", \"number\": \"646 555-4567\" } ], \"gender\":{ \"type\":\"male\" }  }";
     JSONParser *parser = new JSONParser();
