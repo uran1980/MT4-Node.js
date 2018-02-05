@@ -1,0 +1,54 @@
+{
+  "name": "MT4-Node.js",
+  "version": "1.0.0",
+  "main": "Node/server.js",
+  "repository": "https://github.com/uran1980/MT4-Node.js.git",
+  "author": "Ivan Yakovlev <uran1980@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "start": "node ./Node/server.js"
+  },
+  "eslintConfig": {
+    "extends": ["airbnb-base", "prettier"],
+    "env": {
+      "node": true,
+      "mocha": true
+    },
+    "rules": {
+      "no-console": "off",
+      "func-names": "off",
+      "no-plusplus": "off",
+      "no-multi-assign": "off",
+      "no-cond-assign": "off",
+      "no-restricted-syntax": "off",
+      "camelcase": "off"
+    }
+  },
+  "prettier": {
+    "printWidth": 160,
+    "useTabs": false,
+    "tabWidth": 2,
+    "semi": true,
+    "singleQuote": true,
+    "trailingComma": "all",
+    "bracketSpacing": false
+  },
+  "dependencies": {
+    "micro": "^9.1.0",
+    "dotenv": "^4.0.0",
+    "uncaught": "^0.0.5"
+  },
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "cross-env": "^5.0.1",
+    "eslint": "^4.11.0",
+    "eslint-config-airbnb-base": "^12.1.0",
+    "eslint-config-prettier": "^2.8.0",
+    "eslint-plugin-import": "^2.8.0",
+    "micro-dev": "^2.2.0",
+    "micro-dev": "^2.2.0",
+    "mocha": "^4.0.1",
+    "prettier": "^1.8.2",
+    "supertest": "^3.0.0"
+  }
+}

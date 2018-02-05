@@ -7,7 +7,7 @@ var http = require('http');
 
 // Http port Node.js server will be listening on.
 // Make sure that this is an open port and its the same as the one defined in MT4 indicator/EA.
-var _PORT = 8080;
+var _PORT = 3434;
 
 // Create the server and listening to the request
 http
